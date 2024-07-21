@@ -1,0 +1,5 @@
+# Build results
+obj/
+
+# Environment-specific settings
+appsettings.Development.json
