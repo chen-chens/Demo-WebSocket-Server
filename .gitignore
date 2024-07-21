@@ -1,5 +1,6 @@
 # Build results
-obj/
+/obj
+/bin
 
 # Environment-specific settings
 appsettings.Development.json
