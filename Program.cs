@@ -21,6 +21,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 // 添加 SignalR 服務
 builder.Services.AddSignalR();
+// 配置日誌記錄器
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 var app = builder.Build();
 
@@ -62,6 +65,9 @@ app.MapGet("/weatherforecast", () =>
 .WithOpenApi();
 
 app.Run();
+
+Console.WriteLine("Server Run!");
+
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
