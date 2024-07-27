@@ -37,6 +37,22 @@ public class ChatHub: Hub
         }
     }
 
+    public async Task NoticeUserLogIn(OnlineUserInfo userInfo)
+    {
+        // 記錄收到的消息
+        _logger.LogInformation($"UserLogIn: {JsonSerializer.Serialize(userInfo)}");
+        try
+        {
+            string messageJson = JsonSerializer.Serialize(userInfo);
+            await Clients.All.SendAsync("UserLogIn", userInfo);
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"NoticeUserLogIn Error: {ex.Message}");
+            _logger.LogError($"NoticeUserLogIn Error: {ex.Message}");
+        }
+    }
+
     public async Task SendGlobalMessage(Message message)
     {
         // 記錄收到的消息
