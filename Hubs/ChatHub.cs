@@ -88,5 +88,20 @@ public class ChatHub: Hub
         }
     }
 
-    
+    public async Task SendPrivateMessage(string toUserId, PrivateMessage message)
+    {
+        // 記錄收到的消息
+        _logger.LogInformation($"Received private message: {JsonSerializer.Serialize(message)}");
+        try
+        {
+            string messageJson = JsonSerializer.Serialize(message);
+            await Clients.User(toUserId).SendAsync("PrivateMessage", messageJson);
+            _logger.LogInformation($"Message sent to {toUserId}: {messageJson}");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine($"SendPrivateMessage Error: {ex.Message}");
+            _logger.LogError($"SendPrivateMessage Error: {ex.Message}");
+        }
+    }
 }
