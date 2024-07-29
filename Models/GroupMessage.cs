@@ -4,6 +4,7 @@ public class GroupMessage : Message
 {
     [JsonPropertyName("groupName")]
     public string GroupName {get; set;}
+    
     [JsonPropertyName("groupId")]
     public string GroupId {get; set;}
 

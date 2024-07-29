@@ -9,12 +9,14 @@ public class ChatHub: Hub
         _logger = logger;
     }
 
-    public async Task JoinGroup(string groupId)
+    public async Task JoinGroup(string[] groupIds)
     {
         try
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
-            _logger.LogTrace($"JoinGroup Success: {groupId}");
+            foreach(var groupId in groupIds){
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+                _logger.LogInformation($"JoinGroup Success: ConnectionId {Context.ConnectionId}/{groupId}");
+            }
         }
         catch(Exception ex)
         {
@@ -28,7 +30,7 @@ public class ChatHub: Hub
         try
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupId);
-            _logger.LogTrace($"LeaveGroup Success: {groupId}");
+            _logger.LogInformation($"LeaveGroup Success: ConnectionId {Context.ConnectionId}/{groupId}");
         }
         catch(Exception ex)
         {
@@ -43,8 +45,8 @@ public class ChatHub: Hub
         _logger.LogInformation($"UserLogIn: {JsonSerializer.Serialize(userInfo)}");
         try
         {
-            string messageJson = JsonSerializer.Serialize(userInfo);
-            await Clients.All.SendAsync("UserLogIn", userInfo);
+            string userInfoJson = JsonSerializer.Serialize(userInfo);
+            await Clients.All.SendAsync("UserLogIn", userInfoJson);
         }
         catch(Exception ex)
         {
@@ -77,6 +79,7 @@ public class ChatHub: Hub
         {
             string messageJson = JsonSerializer.Serialize(message);
             await Clients.Group(groupId).SendAsync("GroupMessage", messageJson);
+            _logger.LogInformation($"Message sent to group {groupId}: {messageJson}");
         }
         catch(Exception ex)
         {
@@ -85,4 +88,5 @@ public class ChatHub: Hub
         }
     }
 
+    
 }
