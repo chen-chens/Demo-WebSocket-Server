@@ -9,6 +9,7 @@ public class ChatHub: Hub
         _logger = logger;
     }
 
+    // 加入群組
     public async Task JoinGroup(string[] groupIds)
     {
         try
@@ -25,6 +26,7 @@ public class ChatHub: Hub
         }
     }
 
+    // 離開群組
     public async Task LeaveGroup(string groupId)
     {
         try
@@ -39,6 +41,7 @@ public class ChatHub: Hub
         }
     }
 
+    // 通知其他人有新加入成員
     public async Task NoticeUserLogIn(OnlineUserInfo userInfo)
     {
         // 記錄收到的消息
@@ -55,6 +58,7 @@ public class ChatHub: Hub
         }
     }
 
+    // 發送全域訊息
     public async Task SendGlobalMessage(Message message)
     {
         // 記錄收到的消息
@@ -71,6 +75,7 @@ public class ChatHub: Hub
         }
     }
 
+    // 發送群組訊息
     public async Task SendGroupMessage(string groupId, GroupMessage message)
     {
         // 記錄收到的消息
@@ -88,6 +93,7 @@ public class ChatHub: Hub
         }
     }
 
+    // 發送私人訊息
     public async Task SendPrivateMessage(string toUserId, PrivateMessage message)
     {
         // 記錄收到的消息
